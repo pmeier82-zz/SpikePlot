@@ -26,8 +26,13 @@ if __name__ == "__main__":
           requires=[],
 
           # metadata for upload to PyPI
-          author="Philipp Meier", author_email="pmeier82@googlemail.com",
-          description=DESC_TITLE, long_description=DESC_LONG, license="BSD",
+          author="Philipp Meier",
+          author_email="pmeier82@googlemail.com",
+          maintainer="Philipp Meier",
+          maintainer_email="pmeier82@googlemail.com",
+          description=DESC_TITLE,
+          long_description=DESC_LONG,
+          license="EUPL v1.1",
           url='http://ni.tu-berlin.de',
           classifiers=['Development Status :: 3 - Alpha',
                        'Intended Audience :: Science/Research',
