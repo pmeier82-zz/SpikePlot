@@ -14,12 +14,14 @@ __docformat__ = 'restructuredtext'
 ##---MATPLOTLIB
 
 import matplotlib
+import neo
 import os
 
 if os.getenv('DISPLAY') is None:
     # we need to use AGG backend here!
     matplotlib.use('Agg')
-del matplotlib, os
+
+del matplotlib, neo, os
 
 
 ##---PACKAGE

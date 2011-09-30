@@ -1,5 +1,4 @@
-A python package interfacing providing plotting facilities customized for spike
-sorting. The package uses the neo package for input data and the matplotlib
-package for plotting. It can be used with an gui event loop for online display
-or a file backend for use in environments where no display is available, like a
-webserver.
+A python package providing plotting facilities customized for spike sorting.
+The package uses the matplotlib package for plotting. It can be used with a gui
+event loop for online display or a file backend for use in environments where
+no display is available, like a webserver.
