@@ -14,8 +14,12 @@ __docformat__ = 'restructuredtext'
 ##---MATPLOTLIB
 
 import matplotlib
-matplotlib.use('Agg')
-del matplotlib
+import os
+
+if os.getenv('DISPLAY') is None:
+    # we need to use AGG backend here!
+    matplotlib.use('Agg')
+del matplotlib, os
 
 
 ##---PACKAGE

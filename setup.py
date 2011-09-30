@@ -1,26 +1,30 @@
 # -*- coding: utf-8 -*-
+#
+# spikeplot - setup.py
+#
+# Philipp Meier <pmeier82 at googlemail dot com>
+# 2011-09-30
+#
+
+"""install script for the SpikeEval package"""
+__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
+__docformat__ = 'restructuredtext'
 
 from setuptools import setup, find_packages
 
-DESC ="SpikePlot : plotting functions for spike sorting"
+DESC_TITLE = "SpikePlot : plotting package for spike sorting"
+DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
+
 print find_packages()
 
-
 if __name__ == "__main__":
-
-    setup(name="neo",
-          version='0.1.0',
-          packages=find_packages(),
+    setup(name="neo", version='0.1.0', packages=find_packages(),
           include_package_data=True,
-          install_requires=['scipy>=0.7.0', 'matplotlib>=0.99.3'],
-          requires=[],
+          install_requires=['scipy>=0.7.0', 'matplotlib>=0.99.3'], requires=[],
 
           # metadata for upload to PyPI
-          author="Philipp Meier",
-          author_email="pmeier82@googlemail.com",
-          description=DESC,
-          long_description=DESC,
-          license="BSD",
+          author="Philipp Meier", author_email="pmeier82@googlemail.com",
+          description=DESC, long_description=DESC, license="BSD",
           url='http://ni.tu-berlin.de',
           classifiers=['Development Status :: 3 - Alpha',
                        'Intended Audience :: Science/Research',
@@ -28,5 +32,4 @@ if __name__ == "__main__":
                        'Natural Language :: English',
                        'Operating System :: OS Independent',
                        'Programming Language :: Python',
-                       'Topic :: Scientific/Engineering :: Bio-Informatics']
-    )
+                       'Topic :: Scientific/Engineering :: Bio-Informatics'], )
