@@ -12,19 +12,22 @@ __docformat__ = 'restructuredtext'
 
 from setuptools import setup, find_packages
 
-DESC_TITLE = "SpikePlot : plotting package for spike sorting"
+DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
 DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
 
-print find_packages()
+#print find_packages()
 
 if __name__ == "__main__":
-    setup(name="neo", version='0.1.0', packages=find_packages(),
+    setup(name="spikeplot",
+          version='0.1.0',
+          packages=find_packages(),
           include_package_data=True,
-          install_requires=['scipy>=0.7.0', 'matplotlib>=0.99.3'], requires=[],
+          install_requires=['scipy>=0.7.0', 'matplotlib>=0.99.3'],
+          requires=[],
 
           # metadata for upload to PyPI
           author="Philipp Meier", author_email="pmeier82@googlemail.com",
-          description=DESC, long_description=DESC, license="BSD",
+          description=DESC_TITLE, long_description=DESC_LONG, license="BSD",
           url='http://ni.tu-berlin.de',
           classifiers=['Development Status :: 3 - Alpha',
                        'Intended Audience :: Science/Research',
@@ -32,4 +35,4 @@ if __name__ == "__main__":
                        'Natural Language :: English',
                        'Operating System :: OS Independent',
                        'Programming Language :: Python',
-                       'Topic :: Scientific/Engineering :: Bio-Informatics'], )
+                       'Topic :: Scientific/Engineering :: Bio-Informatics'])
