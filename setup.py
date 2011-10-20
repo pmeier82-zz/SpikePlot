@@ -13,7 +13,7 @@ from setuptools import setup, find_packages
 
 def find_version():
     """read version from __init__"""
-    rval = '?'
+    rval = '-1'
     with open('./spikeplot/__init__.py', 'r') as f:
         for line in f:
             if line.startswith('__version__'):
