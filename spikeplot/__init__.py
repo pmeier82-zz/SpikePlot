@@ -8,6 +8,7 @@
 
 """plotting package for spike sorting"""
 __docformat__ = 'restructuredtext'
+__version__ = open('../VERSION', 'r').readline().split()[0]
 
 
 ##---MATPLOTLIB

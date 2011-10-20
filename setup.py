@@ -13,12 +13,13 @@ from setuptools import setup, find_packages
 
 DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
 DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
+VERSION = open('VERSION', 'r').readline().split()[0]
 
 #print find_packages()
 
 if __name__ == "__main__":
     setup(name="spikeplot",
-          version='0.1.1',
+          version=VERSION,
           packages=find_packages(),
           include_package_data=True,
           install_requires=[
