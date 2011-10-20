@@ -11,9 +11,19 @@ __docformat__ = 'restructuredtext'
 
 from setuptools import setup, find_packages
 
+def find_version():
+    """read version from __init__"""
+    rval = '?'
+    with open('./spikeplot/__init__.py', 'r') as f:
+        for line in f:
+            if line.startswith('__version__'):
+                rval = line.split()[-1][1:-1]
+                break
+    return rval
+
 DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
 DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
-VERSION = open('VERSION', 'r').readline().split()[0]
+VERSION = find_version()
 
 #print find_packages()
 
