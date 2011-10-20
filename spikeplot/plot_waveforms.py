@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# spikeval - spikeplot.plot_waveforms.py
+# spikeplot - plot_waveforms.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29
 #
 
 """scatter plot for clustering data"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 __all__ = ['waveforms']
 
@@ -15,14 +14,15 @@ __all__ = ['waveforms']
 ##---IMPORTS
 
 import scipy as sp
-from common import COLOURS, save_figure, check_plotting_handle, plt
+from .common import COLOURS, save_figure, check_plotting_handle, plt
 
 
 ##---FUNCTION
 
 def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
-              plot_single_waveforms=True, set_y_range=False, plot_separate=True
-, plot_handle=None, colours=None, title=None, filename=None, show=True):
+              plot_single_waveforms=True, set_y_range=False,
+              plot_separate=True, plot_handle=None, colours=None, title=None,
+              filename=None, show=True):
     """plot one set of spiketrains or two sets of spkitrains with their
     interspike alignment
 
@@ -77,9 +77,11 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
         srate = samples_per_second
     for k in waveforms.keys():
         if waveforms[k].ndim == 3:
-            waveforms[k] = sp.vstack([sp.hstack([waveforms[k][i, :, j]
-                                      for j in xrange(waveforms[k].shape[-1])])
-                                      for i in xrange(waveforms[k].shape[0])])
+            waveforms[k] = sp.vstack(
+                [sp.hstack(
+                    [waveforms[k][i, :, j]
+                     for j in xrange(waveforms[k].shape[-1])])
+                 for i in xrange(waveforms[k].shape[0])])
     firstKey = waveforms.keys()[0]
     nunits = len(waveforms)
     my_ymin = waveforms[firstKey].min()
@@ -150,14 +152,4 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
 ##--- MAIN
 
 if __name__ == '__main__':
-    # get a figure
-    f = plt.figure()
-
-    # get some data
-    my_data = {0:sp.randn(20, 50, 4), 1:sp.randn(10, 200) + 2}
-
-    # call the plot function on the axes
-    f_ret = waveforms(my_data, tf=50, plot_handle=f, title='Test Plot',
-                      plot_mean=True, plot_single_waveforms=True,
-                      plot_separate=True)
-    print f == f_ret
+    pass

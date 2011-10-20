@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# spikeval - spikeplot.common.py
+# spikeplot - common.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29
 #
 
 """basic stuff for plotting"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 __all__ = ['check_plotting_handle', 'save_figure', 'COLOURS', 'plt', 'mpl']
 

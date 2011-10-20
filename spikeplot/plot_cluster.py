@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-# spikeval - spikeplot.plot_cluster.py
+# spikeplot - plot_cluster.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29
 #
 
 """scatter plot for clustering data"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 __all__ = ['cluster']
 
 
 ##---IMPORTS
 
-import scipy as sp
-from common import COLOURS, save_figure, check_plotting_handle, mpl, plt
+from .common import COLOURS, save_figure, check_plotting_handle, mpl, plt
 
 
 ##---FUNCTION
@@ -73,8 +71,12 @@ def cluster(data, data_dim=(0, 1), plot_handle=None, plot_mean=True,
     # plot single cluster members
     col_idx = 0
     for k in sorted(data.keys()):
-        ax.plot(data[k][:, data_dim[0]], data[k][:, data_dim[1]], marker='.',
-                lw=0, c=col_lst[col_idx % len(col_lst)])
+        ax.plot(
+            data[k][:, data_dim[0]],
+            data[k][:, data_dim[1]],
+            marker='.',
+            lw=0,
+            c=col_lst[col_idx % len(col_lst)])
         col_idx += 1
 
     # plot cluster means
@@ -82,17 +84,25 @@ def cluster(data, data_dim=(0, 1), plot_handle=None, plot_mean=True,
         col_idx = 0
         for k in sorted(data.keys()):
             my_mean = data[k][:, data_dim].mean(axis=0)
-            ax.plot([my_mean[0]], [my_mean[1]], lw=0, marker='x',
-                                mfc=col_lst[col_idx % len(col_lst)], ms=10,
-                                mew=1, mec='k')
+            ax.plot(
+                [my_mean[0]],
+                [my_mean[1]],
+                            lw=0,
+                            marker='x',
+                            mfc=col_lst[col_idx % len(col_lst)],
+                            ms=10,
+                            mew=1,
+                            mec='k')
 
             # plot density estimates
             if plot_mean is not True:
                 ax.add_artist(
-                    mpl.patches.Ellipse(xy=my_mean, width=plot_mean * 2,
-                                        height=plot_mean * 2, facecolor='none',
-                                        edgecolor=col_lst[
-                                                  col_idx % len(col_lst)]))
+                    mpl.patches.Ellipse(
+                        xy=my_mean,
+                        width=plot_mean * 2,
+                        height=plot_mean * 2,
+                        facecolor='none',
+                        edgecolor=col_lst[col_idx % len(col_lst)]))
             col_idx += 1
 
     # fancy stuff
@@ -108,22 +118,9 @@ def cluster(data, data_dim=(0, 1), plot_handle=None, plot_mean=True,
         save_figure(fig, filename, '')
     if show is True:
         plt.show()
-    return fig, ax
+    return fig
 
 ##---MAIN
 
 if __name__ == '__main__':
-    from common import plt
-    # get a figure
-    f = plt.figure()
-
-    # get an axes
-    ax = f.add_subplot(1, 1, 1)
-
-    # get some data
-    my_data = {0:sp.randn(500, 2), 1:sp.randn(300, 2) + 2}
-
-    # call the plot function on the axes
-    f_ret, ax_ret = cluster(my_data, plot_handle=ax, title='Test Plot',
-                            plot_mean=2)
-    print f == f_ret, ax == ax_ret
+    pass

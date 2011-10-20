@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# spikeval - spikeplot.plot_spike_trains.py
+# spikeplot - plot_spike_trains.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29
 #
 
 """scatter plot for clustering data"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 __all__ = ['spike_trains']
 
@@ -15,14 +14,15 @@ __all__ = ['spike_trains']
 ##---IMPORTS
 
 import scipy as sp
-from common import COLOURS, save_figure, check_plotting_handle, plt
+from .common import COLOURS, save_figure, check_plotting_handle, plt
 
 
 ##---FUNCTION
 
-def spike_trains(spiketrains, spiketrains2=None, alignment=None, marker_width=3
-, samples_per_second=None, plot_handle=None, filename=None, label1=None,
-                 label2=None, colours=None, show=True):
+def spike_trains(spiketrains, spiketrains2=None, alignment=None,
+                 marker_width=3, samples_per_second=None, plot_handle=None,
+                 filename=None, label1=None, label2=None, colours=None,
+                 show=True):
     """plot one set of spike trains or two sets of spike trains with their
     inter-spike alignment
 
@@ -84,10 +84,15 @@ def spike_trains(spiketrains, spiketrains2=None, alignment=None, marker_width=3
     my_min_timesample = spiketrains[spiketrains.keys()[0]][0]
     for unit in sorted(spiketrains.keys()):
         col = col_lst[idx % len(col_lst)]
-        ax.plot(spiketrains[unit] / srate,
-                sp.zeros_like(spiketrains[unit]) + nneuron - 1 - idx,
-                marker='|', mec=col, mfc=col, mew=marker_width, ls='None',
-                ms=13)
+        ax.plot(
+            spiketrains[unit] / srate,
+            sp.zeros_like(spiketrains[unit]) + nneuron - 1 - idx,
+            marker='|',
+            mec=col,
+            mfc=col,
+            mew=marker_width,
+            ls='None',
+            ms=13)
         labels.append('Unit %s' % unit)
         idx += 1
         my_max_timesample = max(my_max_timesample, spiketrains[unit].max())
@@ -100,7 +105,11 @@ def spike_trains(spiketrains, spiketrains2=None, alignment=None, marker_width=3
             col = col_lst[idx % len(col_lst)]
             ax.plot(spiketrains2[unit] / srate, sp.zeros_like(
                 spiketrains2[unit]) + nneuron - 1 - idx - offset, marker='|',
-                    mec=col, mfc=col, mew=marker_width, ls='None', ms=13)
+                    mec=col,
+                    mfc=col,
+                    mew=marker_width,
+                    ls='None',
+                    ms=13)
             labels.append('Unit %s' % unit)
             idx += 1
             my_max_timesample = max(my_max_timesample,
@@ -122,9 +131,12 @@ def spike_trains(spiketrains, spiketrains2=None, alignment=None, marker_width=3
                                 alignment[(unit1, unit2)][i][0]] / srate
                         end = spiketrains[unit2][
                               alignment[(unit1, unit2)][i][1]] / srate
-                        ax.plot((start, end),
-                            (nneuron - idx1 - 1, nneuron - idx2 - 1),
-                                            c=(0, 0, 0), ls=":")
+                        ax.plot(
+                            (start, end),
+                            (nneuron - idx1 - 1,
+                             nneuron - idx2 - 1),
+                                        c=(0, 0, 0),
+                                        ls=":")
         else:
             skeys1 = sorted(spiketrains.keys())
             skeys2 = sorted(spiketrains2.keys())
@@ -138,10 +150,13 @@ def spike_trains(spiketrains, spiketrains2=None, alignment=None, marker_width=3
                                 alignment[(unit1, unit2)][i][0]] / srate
                         end = spiketrains2[unit2][
                               alignment[(unit1, unit2)][i][1]] / srate
-                        ax.plot((start, end), (nneuron - idx1 - 1,
-                                               nneuron - len(
-                                                   skeys1) - idx2 - 1 - offset)
-                                            , c=(0, 0, 0), ls=":")
+                        ax.plot(
+                            (start, end),
+                            (nneuron - idx1 - 1,
+                             nneuron - len(skeys1) -
+                             idx2 - 1 - offset),
+                                        c=(0, 0, 0),
+                                        ls=":")
 
     # plot spike labels if provided
     labelList = ['TP', 'TPO', 'FP', 'FPA', 'FPAO', 'FN', 'FNO']
@@ -180,22 +195,9 @@ def spike_trains(spiketrains, spiketrains2=None, alignment=None, marker_width=3
         save_figure(fig, filename, '')
     if show is True:
         plt.show()
-    return fig, ax
+    return fig
 
 ##---MAIN
 
 if __name__ == '__main__':
-    # get figure
-    f = plt.figure()
-    ax = f.add_subplot(111)
-
-    # inits
-    mytrains = {0:sp.array([1, 3, 40, 50, 56]) * 100,
-                1:sp.array([5, 33, 38, 43, 66, 68]) * 100}
-    alignment = {(0, 1):[(1, 1), (2, 3), (4, 2)]}
-
-    # plot
-    f_ret, ax_ret = spike_trains(mytrains, alignment=alignment,
-                                 #        filename='unitTest_spike_trains_py',
-                                 samples_per_second=24000, plot_handle=ax)
-    print f == f_ret, ax == ax_ret
+    pass

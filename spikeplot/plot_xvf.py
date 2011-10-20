@@ -1,70 +1,34 @@
 # -*- coding: utf-8 -*-
-# This file is part of the package SpikePy that provides signal processing
-# algorithms tailored towards spike sorting.
 #
-# Authors: Philipp Meier and Felix Franke
-# Affiliation:
-#   Bernstein Center for Computational Neuroscience (BCCN) Berlin
-#     and
-#   Neural Information Processing Group
-#   School for Electrical Engineering and Computer Science
-#   Berlin Institute of Technology
-#   FR 2-1, Franklinstrasse 28/29, 10587 Berlin, Germany
-#   Tel: +49-30-314 26756
+# spikeplot - plot_xvf.py
 #
-# Date: 2011-02-25
-# Copyright (c) 2011 Philipp Meier, Felix Franke & Technische Universität Berlin
-# Acknowledgement: This work was supported by Deutsche Forschungs Gemeinschaft
-#                  (DFG) with grant GRK 1589/1 and Bundesministerium für Bildung
-#                  und Forschung (BMBF) with grants 01GQ0743 and 01GQ0410.
-#
-#______________________________________________________________________________
-#
-# This is free software; you can redistribute it and/or modify it under the
-# terms of version 1.1 of the EUPL, European Union Public Licence.
-# The software is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the EUPL for more details.
-#______________________________________________________________________________
+# Philipp Meier <pmeier82 at googlemail dot com>
+# 2011-09-29
 #
 
 
 """plot the xi vs f tensor in a grid"""
 __docformat__ = 'restructuredtext'
-
-
-##---ALL
-
-__all__ = [
-    'xvf_tensor'
-]
+__all__ = ['xvf_tensor']
 
 
 ##---IMPORTS
 
-from common import save_figure, check_plotting_handle, plt
+from .common import save_figure, check_plotting_handle, plt
 
 
 ##---FUNCTION
 
-def xvf_tensor(
-    # xvf_tensor
-    data,
-    nc=4,
-    data_trans=None,
-    # plot
-    plot_handle=None,
-    title='Xi vs F Tensor',
-    filename=None,
-    show=True
-):
+def xvf_tensor(data, nc=4, data_trans=None, plot_handle=None,
+               title='Xi vs F Tensor', filename=None, show=True):
     """plots xcorrs tensor for a templates-filter set
 
     :Parameters:
         # xvf_tensor parameters
         data : list
             List holding [templates, filters, xvft]. Templates and filters
-            are in the channel concatenated representation. xvft has dimensions
+            are in the channel concatenated representation. xvft has
+            dimensions
             as [time, filters, templates]
         nc : int
             Channel count for templates, and filters.
@@ -91,11 +55,12 @@ def xvf_tensor(
     # checks
     fig = check_plotting_handle(plot_handle, create_ax=False)[0]
     fig.clear()
-    err_str = 'data expected to be a list of ndarrays: [templates, filters, xvf-tensor data]'
     if not isinstance(data, list):
-        raise TypeError(err_str)
+        raise TypeError('data expected to be a list of ndarrays: '
+                        '[templates, filters,xvf-tensor data]')
     if len(data) != 3:
-        raise ValueError(err_str)
+        raise ValueError('data expected to be a list of ndarrays: '
+                         '[templates, filters,xvf-tensor data]')
     temps, filts, xvft = data
     if temps.shape != filts.shape:
         raise ValueError('inconsistent shapes for templates and filters')
@@ -141,7 +106,6 @@ def xvf_tensor(
 
     # return
     return fig
-
 
 ##---MAIN
 

@@ -7,7 +7,6 @@
 #
 
 """install script for the SpikeEval package"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 
 from setuptools import setup, find_packages
@@ -19,7 +18,7 @@ DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
 
 if __name__ == "__main__":
     setup(name="spikeplot",
-          version='0.1.0',
+          version='0.1.1',
           packages=find_packages(),
           include_package_data=True,
           install_requires=[
@@ -28,20 +27,19 @@ if __name__ == "__main__":
           ],
           requires=[],
 
-          # metadata for upload to PyPI
+          # metadata
           author="Philipp Meier",
           author_email="pmeier82@googlemail.com",
           maintainer="Philipp Meier",
           maintainer_email="pmeier82@googlemail.com",
           description=DESC_TITLE,
           long_description=DESC_LONG,
-          license="EUPL v1.1",
+          license="MIT License",
           url='http://ni.tu-berlin.de',
           classifiers=[
-              'Development Status :: 3 - Alpha',
+              'Development Status :: 4 - Beta',
               'Intended Audience :: Science/Research',
-              'License :: OSI Approved :: European Union Public '
-              'Licence 1.1 (EUPL 1.1)',
+              'License :: OSI Approved :: MIT License',
               'Natural Language :: English',
               'Operating System :: OS Independent',
               'Programming Language :: Python',

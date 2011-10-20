@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# spikeval - spikeplot.plot_mcdata.py
+# spikeplot - plot_mcdata.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29
 #
 
 """scatter plot for clustering data"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 __all__ = ['mcdata']
 
@@ -15,14 +14,14 @@ __all__ = ['mcdata']
 ##---IMPORTS
 
 import scipy as sp
-from common import COLOURS, save_figure, check_plotting_handle, plt, mpl
+from .common import COLOURS, save_figure, check_plotting_handle, plt, mpl
 
 
 ##---FUNCTIONS
 
 def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
-           epochs=[], plot_handle=None, colours=None, title=None, filename=None
-, show=True):
+           epochs=[], plot_handle=None, colours=None, title=None,
+           filename=None, show=True):
     """plot multichanneled data
 
     :Parameters:
@@ -120,14 +119,8 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
     # plot data
     for c, a in enumerate(fig.axes[:nc]):
         a.add_collection(
-            mpl.collections.LineCollection([sp.vstack((x_vals, data[:, c])).T],
-                                                                              colors=[
-                                                                                  (
-                                                                                  0
-                                                                                  ,
-                                                                                  0
-                                                                                  ,
-                                                                                  0)]))
+            mpl.collections.LineCollection(
+                [sp.vstack((x_vals, data[:, c])).T], colors=[(0, 0, 0)]))
 
     # plot other
     if has_other:
@@ -140,21 +133,21 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
         col = col_lst[u % len(col_lst)]
         if isinstance(events[u], tuple):
             if len(events[u]) != 2:
-                raise ValueError(
-                    'Event entry for unit %s is not a tuple of length 2' % u)
+                raise ValueError('Event entry for unit %s is not a tuple '
+                                 'of length 2' % u)
             u_wf, u_ev = events[u]
             if not u_wf.shape[1] == nc:
-                raise ValueError(
-                    'Waveform for unit %s has mismatching channel count' % u)
+                raise ValueError('Waveform for unit %s has mismatching '
+                                 'channel count' % u)
             cut = int(sp.floor(u_wf.shape[0] / 2.0))
             for c, a in enumerate(fig.axes[:nc]):
-                a.add_collection(mpl.collections.LineCollection([sp.vstack((
-                    sp.arange(u_wf.shape[0]) - cut + x_offset + u_ev[i],
-                    u_wf[:, c])).T
-                                                                 for i in
-                                                                 xrange(
-                                                                     u_ev.size)]
-                    , colors=[col]))
+                a.add_collection(
+                    mpl.collections.LineCollection(
+                        [sp.vstack((
+                            sp.arange(u_wf.shape[0]) - cut + x_offset +
+                            u_ev[i],
+                            u_wf[:, c])).T
+                         for i in xrange(u_ev.size)], colors=[col]))
             if has_other:
                 for e in u_ev:
                     fig.axes[-1].axvline(e + x_offset, c=col)
@@ -168,16 +161,20 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
     # epochs
     for ep in epochs:
         for a in fig.axes:
-            a.axvspan(ep[0] + x_offset, ep[1] + x_offset, fc='gray', alpha=0.2)
+            a.axvspan(
+                ep[0] + x_offset,
+                ep[1] + x_offset,
+                fc='gray',
+                alpha=0.2)
 
     # zero lines
     if zero_line:
         for a in fig.axes:
-            a.add_collection(mpl.collections.LineCollection(
-                [sp.vstack(([x_vals[0], x_vals[-1]], sp.zeros(2))).T],
-                                                                     linestyles='dashed'
-                                                                     , colors=[
-                    (0, 0, 0)]))
+            a.add_collection(
+                mpl.collections.LineCollection(
+                    [sp.vstack(([x_vals[0],x_vals[-1]],sp.zeros(2))).T],
+                    linestyles='dashed',
+                    colors=[(0, 0, 0)]))
 
     # scale axes
     fig.axes[0].set_xlim(x_vals[0], x_vals[-1])
@@ -201,23 +198,4 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
 ##--- MAIN
 
 if __name__ == '__main__':
-    ns, nc = 300 + 1000, 4
-    tf = 65
-    cut = (-int(sp.floor(tf / 2.0)), int(sp.ceil(tf / 2.0)))
-    mydata = sp.randn(ns, nc)
-    wf = sp.array([sp.sin(sp.linspace(0, 2 * sp.pi, tf)) * (i + 1)
-                   for i in xrange(nc)]).T
-    unit_ev = sp.array([50, 300, 750])
-    for i in unit_ev:
-        mydata[i + cut[0]:i + cut[1], :] += wf
-    myother = sp.randn(ns, 4)
-    ep = sp.array([[150, 200], [800, 950]])
-    ev = {0:(wf, unit_ev), 1:unit_ev}
-
-    fig = plt.figure()
-
-    mcdata(mydata, other=myother, colours=None, epochs=ep, events=ev,
-           x_offset=-100, plot_handle=fig)
-    fig.set_clip_on(True)
-
-    plt.show()
+    pass

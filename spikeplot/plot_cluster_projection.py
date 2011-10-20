@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# spikeval - spikeplot.plot_cluster_projection.py
+# spikeplot - plot_cluster_projection.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29
 #
 
 """scatter plot for clustering data"""
-__author__ = 'Philipp Meier <pmeier82 at googlemail dot com>'
 __docformat__ = 'restructuredtext'
 __all__ = ['cluster_projection']
 
@@ -17,7 +16,7 @@ __all__ = ['cluster_projection']
 import scipy as sp
 from scipy import linalg as sp_la
 from scipy.stats import norm
-from common import COLOURS, save_figure, check_plotting_handle, plt
+from .common import COLOURS, save_figure, check_plotting_handle, plt
 
 
 ##---FUNCTION
@@ -112,14 +111,4 @@ def cluster_projection(data, colours=None, plot_handle=None, filename=None,
 ##---MAIN
 
 if __name__ == '__main__':
-    # get a figure
-    f = plt.figure()
-
-    # get some data
-    my_data = {0:sp.randn(900, 2), 1:sp.randn(700, 2) + 5,
-               2:sp.randn(500, 2) - 5, 3:sp.randn(300, 2) - 10,
-               4:sp.randn(100, 2) + 10}
-
-    # call the plot function on the axes
-    f_ret = cluster_projection(my_data, plot_handle=f)
-    print f == f_ret
+    pass
