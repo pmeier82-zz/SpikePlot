@@ -14,11 +14,17 @@ from setuptools import setup, find_packages
 def find_version():
     """read version from __init__"""
     rval = '-1'
-    with open('./spikeplot/__init__.py', 'r') as f:
-        for line in f:
-            if line.startswith('__version__'):
-                rval = line.split()[-1][1:-1]
-                break
+    try:
+        f = open('./spikeplot/__init__.py', 'r')
+        try:
+            for line in f:
+                if line.startswith('__version__'):
+                    rval = line.split()[-1][1:-1]
+                    break
+        finally:
+            f.close()
+    except:
+        rval = '-1'
     return rval
 
 DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
