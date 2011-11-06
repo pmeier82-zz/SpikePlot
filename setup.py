@@ -9,7 +9,7 @@
 """install script for the SpikeEval package"""
 __docformat__ = 'restructuredtext'
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 def find_version():
     """read version from __init__"""
@@ -31,19 +31,14 @@ DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
 DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
 VERSION = find_version()
 
-#print find_packages()
-
 if __name__ == "__main__":
-    setup(name="spikeplot",
+    setup(name="SpikePlot",
           version=VERSION,
-          packages=find_packages(),
-          include_package_data=True,
+          packages=['spikeplot'],
           install_requires=[
               'scipy>=0.6.0',
-              'matplotlib>=0.98'
+              'matplotlib>=0.98.1',
           ],
-          requires=[],
-
           # metadata
           author="Philipp Meier",
           author_email="pmeier82@googlemail.com",

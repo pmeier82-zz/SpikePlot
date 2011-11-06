@@ -13,7 +13,7 @@ __all__ = ['cluster']
 
 ##---IMPORTS
 
-from common import COLOURS, save_figure, check_plotting_handle, mpl, plt
+from .common import COLOURS, save_figure, check_plotting_handle, mpl, plt
 
 
 ##---FUNCTION

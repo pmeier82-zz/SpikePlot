@@ -8,7 +8,7 @@
 
 """plotting package for spike sorting"""
 __docformat__ = 'restructuredtext'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 ##---MATPLOTLIB
@@ -24,13 +24,13 @@ del matplotlib, os
 
 ##---PACKAGE
 
-from common import *
-from plot_cluster import *
-from plot_cluster_projection import *
-from plot_mcdata import *
-from plot_spike_trains import *
-from plot_waveforms import *
-from plot_xvf import *
+from .common import *
+from .plot_cluster import *
+from .plot_cluster_projection import *
+from .plot_mcdata import *
+from .plot_spike_trains import *
+from .plot_waveforms import *
+from .plot_xvf import *
 
 
 ##---MAIN
