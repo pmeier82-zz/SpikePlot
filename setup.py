@@ -39,8 +39,8 @@ if __name__ == "__main__":
           packages=find_packages(),
           include_package_data=True,
           install_requires=[
-              'scipy>=0.7.0',
-              'matplotlib>=0.99.3'
+              'scipy>=0.6.0',
+              'matplotlib>=0.98'
           ],
           requires=[],
 
