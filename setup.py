@@ -37,7 +37,7 @@ if __name__ == "__main__":
           packages=['spikeplot'],
           install_requires=[
               'scipy>=0.6.0',
-              'matplotlib>=0.98.1',
+              'matplotlib',
           ],
           # metadata
           author="Philipp Meier",

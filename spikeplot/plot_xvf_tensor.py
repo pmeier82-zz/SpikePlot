@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# spikeplot - plot_xvf.py
+# spikeplot - plot_xvf_tensor.py
 #
 # Philipp Meier <pmeier82 at googlemail dot com>
 # 2011-09-29

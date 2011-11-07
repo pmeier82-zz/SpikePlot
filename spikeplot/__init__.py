@@ -24,13 +24,13 @@ del matplotlib, os
 
 ##---PACKAGE
 
-from .common import *
-from .plot_cluster import *
-from .plot_cluster_projection import *
-from .plot_mcdata import *
-from .plot_spike_trains import *
-from .plot_waveforms import *
-from .plot_xvf import *
+from .common import check_plotting_handle, save_figure, COLOURS, plt, mpl
+from .plot_cluster import cluster
+from .plot_cluster_projection import cluster_projection
+from .plot_mcdata import mcdata
+from .plot_spike_trains import spike_trains
+from .plot_waveforms import waveforms
+from .plot_xvf_tensor import xvf_tensor
 
 
 ##---MAIN
