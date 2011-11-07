@@ -13,7 +13,7 @@ from setuptools import setup
 
 def find_version():
     """read version from __init__"""
-    rval = '-1'
+    rval = '0'
     try:
         f = open('./spikeplot/__init__.py', 'r')
         try:
@@ -24,7 +24,7 @@ def find_version():
         finally:
             f.close()
     except:
-        rval = '-1'
+        rval = '0'
     return rval
 
 DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
@@ -35,10 +35,13 @@ if __name__ == "__main__":
     setup(name="SpikePlot",
           version=VERSION,
           packages=['spikeplot'],
+          include_package_data=True,
           install_requires=[
               'scipy>=0.6.0',
               'matplotlib',
-          ],
+              ],
+          requires=[],
+
           # metadata
           author="Philipp Meier",
           author_email="pmeier82@googlemail.com",
