@@ -8,18 +8,22 @@
 
 """plotting package for spike sorting"""
 __docformat__ = 'restructuredtext'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 ##---MATPLOTLIB
 
 import matplotlib
 import os
+import platform
 
-if os.getenv('DISPLAY') is None:
-    # we need to use AGG backend here!
-    matplotlib.use('Agg')
-del matplotlib, os
+if platform.system() == 'Windows':
+    matplotlib.use('TkAgg')
+else:
+    if os.getenv('DISPLAY') is None:
+        # we need to use AGG backend here!
+        matplotlib.use('Agg')
+del matplotlib, os, platform
 
 
 ##---PACKAGE

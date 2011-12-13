@@ -112,7 +112,8 @@ def save_figure(fig, file_name, file_dir='.', desc='', formats=('png',)):
 
     for file_format in formats:
         try:
-            fig.savefig(''.join([save_path, '.', file_format]), format=format)
+            fig.savefig(''.join([save_path, '.', file_format]),
+                        format=file_format)
         except:
             pass
 
