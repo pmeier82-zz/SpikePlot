@@ -102,7 +102,7 @@ def xvf_tensor(data, nc=4, data_trans=None, plot_handle=None,
     if filename is not None:
         save_figure(fig, filename, '')
     if show is True:
-        P.show()
+        plt.show()
 
     # return
     return fig
