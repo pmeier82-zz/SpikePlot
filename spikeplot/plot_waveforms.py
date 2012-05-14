@@ -21,8 +21,8 @@ from .common import COLOURS, save_figure, check_plotting_handle, plt
 
 def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
               plot_single_waveforms=True, set_y_range=False,
-              plot_separate=True, plot_handle=None, colours=None, title=None,
-              filename=None, show=True):
+              plot_separate=True, templates=None, plot_handle=None,
+              colours=None, title=None, filename=None, show=True):
     """plot one set of spiketrains or two sets of spkitrains with their
     interspike alignment
 
@@ -41,6 +41,8 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
             If True, plot the single waveforms per unit.
         plot_separate : bool
             If True, plot each units waveforms in a separate axis.
+        templates : dict
+            dict holding one concatenates waveform per key
         set_y_range : bool
             Adjust the y-axis range so waveforms fit in nicely.
         colours : list
@@ -110,13 +112,17 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
                         color=col)
             col_idx += 1
 
+
     # plot cluster means
     if plot_mean is True:
         col_idx = 0
         for u, k in enumerate(sorted(waveforms.keys())):
             if plot_separate is True:
                 ax = fig.axes[u]
-            my_mean = waveforms[k].mean(axis=0)
+            if templates is not None and k in templates:
+                my_mean = templates[k]
+            else:
+                my_mean = waveforms[k].mean(axis=0)
             my_ymin = min(my_ymin, my_mean.min())
             my_ymax = max(my_ymax, my_mean.max())
             my_xmax = max(my_xmax, my_mean.size - 1)
