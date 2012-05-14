@@ -100,7 +100,7 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
         for u, k in enumerate(sorted(waveforms.keys())):
             if plot_separate is True:
                 ax = fig.add_subplot(nunits, 1, u + 1, sharex=ax, sharey=ax)
-            nsample = waveforms[k].shape[1]
+            nevent, nsample = waveforms[k].shape
             my_ymin = min(my_ymin, waveforms[k].min())
             my_ymax = max(my_ymax, waveforms[k].max())
             my_xmax = max(my_xmax, waveforms[k].shape[1] - 1)
@@ -112,6 +112,8 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
                         color=col)
             col_idx += 1
 
+            # addition: per axis event count
+            ax.set_ylabel('n:%s' % nevent)
 
     # plot cluster means
     if plot_mean is True:
@@ -140,11 +142,10 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
     if title is not None:
         fig.suptitle(title)
     if samples_per_second is not None:
-        ax.set_xlabel('time in seconds')
+        ax.set_xlabel('time [s]')
     else:
-        ax.set_xlabel('time in samples')
+        ax.set_xlabel('time [samples]')
     ax.set_xlim(0, my_xmax)
-    ax.set_ylabel('amplitude')
     if set_y_range is True:
         ax.set_ylim((1.01 * my_ymin, 1.01 * my_ymax))
 
