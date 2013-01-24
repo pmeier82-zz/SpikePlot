@@ -20,59 +20,48 @@ from .common import COLOURS, save_figure, check_plotting_handle, plt, mpl
 ##---FUNCTIONS
 
 def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
-           epochs=[], plot_handle=None, colours=None, title=None,
+           epochs={}, plot_handle=None, colours=None, title=None,
            filename=None, show=True):
     """plot multichanneled data
 
-    :Parameters:
-        # mcdata parameters
-        data : ndarray
-            The base data to plot with observations(samples) on the rows and
-            variables(channels) on the columns. This data will be plotted on
-            in the n topmost axes.
-        other : ndarray
-            Other data that augments the base data. The other data will be
-            plotted in one axe visibly divided from the base data.
-            Default=None
-        x_offset : int
-            A offset value for the x-axis(samples). This allows for the x-axis
-            to show proper values for windows not starting at x=0.
-            Default=0
-        div : float
-            Percentage of the figure height to use as divider for the others
-            plot.
-            Default=1
-        zero_line : bool
-            if True, mark the zero line for the data channels
-            Dafault=True
-        events : dict
-            dict of events from [x_offset,len(data)]. Vertical markers will be
-            placed at these samples, if the dict entries are lists/ndarrays.
-             If
-            the dict entries are tuples of length 2 (like (ndarray,
-            ndarray)) the
-            first is interpreted as the waveform, and the second as the
-            events.
-            Each unit will be coloured according to the 'colours' vector.
-            Default={}
-        epochs : ndarray
-            List of lists or ndarray [[start,end]]. Background of epochs
-            will be
-            shaded in transparent gray.
-            default=[]
+    -> general plot parameter
 
-        # plot parameters
-        plot_handle : figure or axis
-            A reference to a figure or axis, or None if one has to be created.
-        colours : list
-            List of colors in any matplotlib conform colour representation
-            Default=None
-        title : str
-            A title for the plot. No title if None or ''.
-        filename : str
-            It given and a valid path on the local system, save the figure.
-        show : bool
-            If True, show the figure.
+    :type data: ndarray
+    :param data: The base data to plot with observations(samples) on the rows
+        and variables(channels) on the columns. This data will be plotted on in
+        the n topmost axes.
+    :type other: ndarray
+    :param other: Other data that augments the base data. The other data will
+        be plotted in one axe visibly divided from the base data.
+        Default=None
+    :type x_offset: int
+    :param x_offset: A offset value for the x-axis(samples). This allows for
+        the x-axis to show proper values for windows not starting at x=0. All
+        values for events and epochs etc. will not be shown if they do not
+        fall into the frame defined.
+        Default=0
+    :type div: float
+    :param div: Percentage of the figure height to use as divider for the
+        others plot.
+        Default=1
+    :type zero_line: bool
+    :param zero_line: if True, mark the zero line for the data channels
+        Default=True
+    :type events: dict
+    :param events: dict of events from [x_offset, x_offset+len(data)]. If the
+        dict entries are lists/ndarrays, vertical markers will be placed at
+        these samples. If the dict entries are tuples of length 2, like
+        (ndarray,ndarray), the first is interpreted as the waveform, and the
+        second as the events. Each unit will be coloured according to the
+        'colours' vector.
+        Default={}
+    :type epochs: dict
+    :param epochs: dict of epochs from [x_offset, x_offset+len(data)]. Epochs
+        with numeric keys will be interpreted as belonging to the unit with
+        that key and will be coloured according to the '' vector. All other
+        epochs will appear in grey colour. Epochs are passed as a 2dim vector,
+        like [[start,stop]].
+        Default={}
     """
 
     # checks
@@ -83,7 +72,7 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
         raise ValueError('data is not dim=2!')
     fig, ax = check_plotting_handle(plot_handle, create_ax=False)
 
-    # inits
+    # init
     fig.clear()
     has_other = other is not None
     ns, nc = data.shape
@@ -108,13 +97,13 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
         ax.set_ylabel('CH %d' % c)
         if c != nc - 1:
             ax.set_xticklabels(ax.get_xticklabels(), visible=False)
-            #        ax.set_xlim(x_vals[0], x_vals[-1])
-            #        ax.set_ylim(data.min() * 1.1, data.max() * 1.1)
+            #ax.set_xlim(x_vals[0], x_vals[-1])
+            #ax.set_ylim(data.min() * 1.1, data.max() * 1.1)
     if has_other:
         ax = fig.add_axes((0.1, 0.1, 0.8, ax_height), sharex=ax)
         ax.set_ylabel('OTHER')
-        #        ax.set_xlim(x_vals[0], x_vals[-1])
-    #        ax.set_ylim(-other.max() * 1.1, other.max() * 1.1)
+        #ax.set_xlim(x_vals[0], x_vals[-1])
+        #ax.set_ylim(-other.max() * 1.1, other.max() * 1.1)
 
     # plot data
     for c, a in enumerate(fig.axes[:nc]):
@@ -130,7 +119,10 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
 
     # plot events
     for u in sorted(events):
-        col = col_lst[u % len(col_lst)]
+        try:
+            col = col_lst[u % len(col_lst)]
+        except:
+            col = 'gray'
         if isinstance(events[u], tuple):
             if len(events[u]) != 2:
                 raise ValueError('Event entry for unit %s is not a tuple '
@@ -143,42 +135,41 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
             for c, a in enumerate(fig.axes[:nc]):
                 a.add_collection(
                     mpl.collections.LineCollection(
-                        [sp.vstack((
-                            sp.arange(u_wf.shape[0]) - cut + x_offset +
-                            u_ev[i],
-                            u_wf[:, c])).T
+                        [sp.vstack((sp.arange(u_wf.shape[0]) - cut + u_ev[i],
+                                    u_wf[:, c])).T
                          for i in xrange(u_ev.size)], colors=[col]))
             if has_other:
                 for e in u_ev:
-                    fig.axes[-1].axvline(e + x_offset, c=col)
+                    fig.axes[-1].axvline(e, c=col)
         elif isinstance(events[u], (list, sp.ndarray)):
             for a in fig.axes:
                 for e in events[u]:
-                    a.axvline(e + x_offset, c=col)
+                    a.axvline(e, c=col)
         else:
             raise ValueError('events for unit %s are messed up' % u)
 
-    # epochs
-    for ep in epochs:
-        for a in fig.axes:
-            a.axvspan(
-                ep[0] + x_offset,
-                ep[1] + x_offset,
-                fc='gray',
-                alpha=0.2)
+    # plot epochs
+    for u in sorted(epochs):
+        try:
+            col = col_lst[u % len(col_lst)]
+        except:
+            col = 'gray'
+        for ep in epochs[u]:
+            for a in fig.axes:
+                a.axvspan(ep[0], ep[1], fc=col, alpha=0.2)
 
     # zero lines
     if zero_line:
         for a in fig.axes:
             a.add_collection(
                 mpl.collections.LineCollection(
-                    [sp.vstack(([x_vals[0],x_vals[-1]],sp.zeros(2))).T],
+                    [sp.vstack(([x_vals[0], x_vals[-1]], sp.zeros(2))).T],
                     linestyles='dashed',
                     colors=[(0, 0, 0)]))
 
     # scale axes
     fig.axes[0].set_xlim(x_vals[0], x_vals[-1])
-    fig.axes[0].set_ylim(data.min() * 1.1, data.max() * 1.1)
+    fig.axes[0].set_ylim(sp.nanmin(data) * 1.05, sp.nanmax(data) * 1.05)
     if has_other:
         fig.axes[-1].set_ylim(sp.nanmin(other) * 1.1, sp.nanmax(other) * 1.1)
 

@@ -9,7 +9,7 @@
 """install script for the SpikeEval package"""
 __docformat__ = 'restructuredtext'
 
-from distutils.core import setup
+from setuptools import setup
 
 def find_version():
     """read version from __init__"""
@@ -27,25 +27,25 @@ def find_version():
         rval = '0'
     return rval
 
-DESC_TITLE = "SpikePlot : plotting package for spike sorting applications"
+DESC_TITLE = 'SpikePlot : plotting package for spike sorting applications'
 DESC_LONG = ''.join([DESC_TITLE, '\n\n', open('README', 'r').read()])
 
 if __name__ == "__main__":
     setup(
         #main
-        name="SpikePlot",
+        name='SpikePlot',
         version=find_version(),
         packages=['spikeplot'],
-        requires=['scipy (>=0.6.0)', 'matplotlib'],
+        install_requires=['scipy', 'matplotlib'],
 
         # metadata
-        author="Philipp Meier",
-        author_email="pmeier82@googlemail.com",
-        maintainer="Philipp Meier",
-        maintainer_email="pmeier82@googlemail.com",
+        author='Philipp Meier',
+        author_email='pmeier82@googlemail.com',
+        maintainer='Philipp Meier',
+        maintainer_email='pmeier82@googlemail.com',
         description=DESC_TITLE,
         long_description=DESC_LONG,
-        license="MIT License",
+        license='MIT License',
         url='http://ni.tu-berlin.de',
         classifiers=[
             'Development Status :: 4 - Beta',
