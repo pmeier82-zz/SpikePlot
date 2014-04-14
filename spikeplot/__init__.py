@@ -8,10 +8,9 @@
 
 """plotting package for spike sorting"""
 __docformat__ = 'restructuredtext'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
-
-##---MATPLOTLIB
+## MATPLOTLIB
 
 import matplotlib
 import os
@@ -25,8 +24,7 @@ else:
         matplotlib.use('Agg')
 del matplotlib, os, platform
 
-
-##---PACKAGE
+## PACKAGE
 
 from .common import check_plotting_handle, save_figure, COLOURS, plt, mpl
 from .plot_cluster import cluster
@@ -36,8 +34,9 @@ from .plot_spike_trains import spike_trains
 from .plot_waveforms import waveforms
 from .plot_xvf_tensor import xvf_tensor
 
-
-##---MAIN
+## MAIN
 
 if __name__ == '__main__':
     pass
+
+## EOF

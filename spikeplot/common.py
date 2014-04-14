@@ -7,35 +7,33 @@
 #
 
 """basic stuff for plotting"""
-__docformat__ = 'restructuredtext'
-__all__ = ['check_plotting_handle', 'save_figure', 'COLOURS', 'plt', 'mpl']
+__docformat__ = "restructuredtext"
+__all__ = ["check_plotting_handle", "save_figure", "COLOURS", "plt", "mpl"]
 
-
-##---IMPORTS
+## IMPORTS
 
 import os
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 
-
-##---CONSTANTS
+## CONSTANTS
 
 COLOURS = [(0, 0, 1), # blue
-    (0, 1, 0), # green
-    (1, 0, 0), # red
-    (1, 0, 1), # fuchsia
-    (0, 1, 1), # aqua
-    (.5, .5, .5), # gray
-    (1, 1, 0), # yellow
-    (.5, .5, 0), #
-    (1, .5, .5), (.5, 1, .5), (0, 0, .5), # navy
-    (0, .5, 0), # green
-    (.5, 0, 0), # maroon
-    (0, .5, .5), # teal
-    (.5, 0, .5), # purple
-    (.5, .5, 0), # olive
-    (.2, .5, .8), (1, .1, .1), (.3, .3, .3), (0, 0, 0), # black
-    (.9, .2, .9), (.2, .9, .9), (.9, .9, .2)]
+           (0, 1, 0), # green
+           (1, 0, 0), # red
+           (1, 0, 1), # fuchsia
+           (0, 1, 1), # aqua
+           (.5, .5, .5), # gray
+           (1, 1, 0), # yellow
+           (.5, .5, 0), #
+           (1, .5, .5), (.5, 1, .5), (0, 0, .5), # navy
+           (0, .5, 0), # green
+           (.5, 0, 0), # maroon
+           (0, .5, .5), # teal
+           (.5, 0, .5), # purple
+           (.5, .5, 0), # olive
+           (.2, .5, .8), (1, .1, .1), (.3, .3, .3), (0, 0, 0), # black
+           (.9, .2, .9), (.2, .9, .9), (.9, .9, .2)]
 """list of RGB tuples to use for unified colours across the plots
 
 usage:
@@ -81,11 +79,11 @@ def check_plotting_handle(something, spid=(1, 1, 1), create_ax=True):
         if create_ax is True:
             ax = something.add_subplot(*spid)
     else:
-        raise ValueError('Either figure or axes handle has to be given')
+        raise ValueError("Either figure or axes handle has to be given")
     return fig, ax
 
 
-def save_figure(fig, file_name, file_dir='.', desc='', formats=('png',)):
+def save_figure(fig, file_name, file_dir='.', desc='', formats=("png",)):
     """save `fig` to `file_name` in each of the `formats` passed.
 
     :Parameters:
@@ -117,7 +115,9 @@ def save_figure(fig, file_name, file_dir='.', desc='', formats=('png',)):
         except:
             pass
 
-##---MAIN
+## MAIN
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass
+
+## EOF

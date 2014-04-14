@@ -125,6 +125,7 @@ def waveforms(waveforms, samples_per_second=None, tf=None, plot_mean=False,
                 my_mean = templates[k]
             else:
                 my_mean = waveforms[k].mean(axis=0)
+            nevent, nsample = waveforms[k].shape
             my_ymin = min(my_ymin, my_mean.min())
             my_ymax = max(my_ymax, my_mean.max())
             my_xmax = max(my_xmax, my_mean.size - 1)

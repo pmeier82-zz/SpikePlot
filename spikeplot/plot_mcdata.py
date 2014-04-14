@@ -7,20 +7,18 @@
 #
 
 """scatter plot for clustering data"""
-__docformat__ = 'restructuredtext'
-__all__ = ['mcdata']
+__docformat__ = "restructuredtext"
+__all__ = ["mcdata"]
 
-
-##---IMPORTS
+## IMPORTS
 
 import scipy as sp
 from .common import COLOURS, save_figure, check_plotting_handle, plt, mpl
 
+## FUNCTIONS
 
-##---FUNCTIONS
-
-def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
-           epochs={}, plot_handle=None, colours=None, title=None,
+def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events=None,
+           epochs=None, plot_handle=None, colours=None, title=None,
            filename=None, show=True):
     """plot multichanneled data
 
@@ -66,10 +64,9 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
 
     # checks
     if not isinstance(data, sp.ndarray):
-        raise ValueError('data is no ndarray!')
+        raise ValueError("data is no ndarray!")
     if data.ndim != 2:
-        data = sp.atleast_2d(data).T
-        raise ValueError('data is not dim=2!')
+        raise ValueError("data is not dim=2!")
     fig, ax = check_plotting_handle(plot_handle, create_ax=False)
 
     # init
@@ -96,7 +93,8 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
         ax = fig.add_axes(ax_size, sharex=ax, sharey=ax)
         ax.set_ylabel('CH %d' % c)
         if c != nc - 1:
-            ax.set_xticklabels(ax.get_xticklabels(), visible=False)
+            plt.setp(ax.get_xticklabels(), visible=False)
+            #ax.set_xticklabels([tl.get_text() for tl in ax.get_xticklabels()], visible=False)
             #ax.set_xlim(x_vals[0], x_vals[-1])
             #ax.set_ylim(data.min() * 1.1, data.max() * 1.1)
     if has_other:
@@ -118,45 +116,47 @@ def mcdata(data, other=None, x_offset=0, div=2, zero_line=True, events={},
              xrange(other.shape[1])], colors=col_lst))
 
     # plot events
-    for u in sorted(events):
-        try:
-            col = col_lst[u % len(col_lst)]
-        except:
-            col = 'gray'
-        if isinstance(events[u], tuple):
-            if len(events[u]) != 2:
-                raise ValueError('Event entry for unit %s is not a tuple '
-                                 'of length 2' % u)
-            u_wf, u_ev = events[u]
-            if not u_wf.shape[1] == nc:
-                raise ValueError('Waveform for unit %s has mismatching '
-                                 'channel count' % u)
-            cut = int(sp.floor(u_wf.shape[0] / 2.0))
-            for c, a in enumerate(fig.axes[:nc]):
-                a.add_collection(
-                    mpl.collections.LineCollection(
-                        [sp.vstack((sp.arange(u_wf.shape[0]) - cut + u_ev[i],
-                                    u_wf[:, c])).T
-                         for i in xrange(u_ev.size)], colors=[col]))
-            if has_other:
-                for e in u_ev:
-                    fig.axes[-1].axvline(e, c=col)
-        elif isinstance(events[u], (list, sp.ndarray)):
-            for a in fig.axes:
-                for e in events[u]:
-                    a.axvline(e, c=col)
-        else:
-            raise ValueError('events for unit %s are messed up' % u)
+    if events is not None:
+        for u in sorted(events):
+            try:
+                col = col_lst[u % len(col_lst)]
+            except:
+                col = 'gray'
+            if isinstance(events[u], tuple):
+                if len(events[u]) != 2:
+                    raise ValueError('Event entry for unit %s is not a tuple '
+                                     'of length 2' % u)
+                u_wf, u_ev = events[u]
+                if not u_wf.shape[1] == nc:
+                    raise ValueError('Waveform for unit %s has mismatching '
+                                     'channel count' % u)
+                cut = int(sp.floor(u_wf.shape[0] / 2.0))
+                for c, a in enumerate(fig.axes[:nc]):
+                    a.add_collection(
+                        mpl.collections.LineCollection(
+                            [sp.vstack((sp.arange(u_wf.shape[0]) - cut + u_ev[i],
+                                        u_wf[:, c])).T
+                             for i in xrange(u_ev.size)], colors=[col]))
+                if has_other:
+                    for e in u_ev:
+                        fig.axes[-1].axvline(e, c=col)
+            elif isinstance(events[u], (list, sp.ndarray)):
+                for a in fig.axes:
+                    for e in events[u]:
+                        a.axvline(e, c=col)
+            else:
+                raise ValueError('events for unit %s are messed up' % u)
 
     # plot epochs
-    for u in sorted(epochs):
-        try:
-            col = col_lst[u % len(col_lst)]
-        except:
-            col = 'gray'
-        for ep in epochs[u]:
-            for a in fig.axes:
-                a.axvspan(ep[0], ep[1], fc=col, alpha=0.2)
+    if epochs is not None:
+        for u in sorted(epochs):
+            try:
+                col = col_lst[u % len(col_lst)]
+            except:
+                col = 'gray'
+            for ep in epochs[u]:
+                for a in fig.axes:
+                    a.axvspan(ep[0], ep[1], fc=col, alpha=0.2)
 
     # zero lines
     if zero_line:
